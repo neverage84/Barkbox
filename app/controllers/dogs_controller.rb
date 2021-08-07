@@ -1,6 +1,7 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   # GET /dogs
   # GET /dogs.json
   def index
@@ -14,7 +15,8 @@ class DogsController < ApplicationController
 
   # GET /dogs/new
   def new
-    @dog = Dog.new
+    #@dog = Dog.new
+    @dog = current_user.dogs.build
   end
 
   # GET /dogs/1/edit
@@ -24,8 +26,8 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.new(dog_params)
-
+    #@dog = Dog.new(dog_params)
+    @dog = current_user.dogs.build(dog_params)
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
@@ -64,6 +66,11 @@ class DogsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+    def correct_user
+      @dog = current_user.dogs.find_by(id: params[:id])
+      redirect_to dogs_path, notice: "Not Authorized To Edit This Dog" if @dog.nil?
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
