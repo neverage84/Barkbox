@@ -1,6 +1,12 @@
 <section>
   <div class="container">
   <h2><%= @dog.name %></h2>
+#erb files
+<%= will_paginate @items , renderer: RemoteLinkPagination::LinkRenderer %>
+-# haml files
+= will_paginate @items, renderer: RemoteLinkPagination::LinkRenderer
+
+
 
   <% @dog.images.each do |image| %>
     <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
