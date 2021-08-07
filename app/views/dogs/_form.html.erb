@@ -3,6 +3,7 @@
   <%= f.input :name %> <br/>
   <%= f.input :description, as: :text %><br/>
   <%= f.input :image, as: :file %> <br/>
+  <%= f.number_field :user_id, id: :dog_user_id, value:current_user.id, type: :hidden %>
 
   <% if @dog.images.any? %>
     <%= image_tag @dog.images.first %>
