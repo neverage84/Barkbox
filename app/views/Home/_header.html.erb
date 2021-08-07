@@ -6,9 +6,20 @@
            
            
               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><%= link_to 'Add Dog', new_dog_path %> </li> 
-                <li><%= link_to 'Show Dogs', dogs_path %> </li>
+                <% if current_user %>
+                  <li><%= link_to 'Show dogs', dogs_path %></li>
+                  <li><%= link_to 'Add your dog', new_dog_path %></li>
+                  <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
+                <% else %>
+                  <li><%= link_to 'Sign in', new_user_session_path %></li>
+                  <li><%= link_to 'Sign up', new_user_registration_path %></li>
+                <% end %>
               </ul>
           </div>
         </div>
       </nav>
+
+
+
+
+     
