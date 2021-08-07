@@ -4,6 +4,13 @@ class DogsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   # GET /dogs
   # GET /dogs.json
+
+  def like
+    @dog = Dog.all.find(params[:id])
+    Like.create(user_id: current_user:id, dog_id: @dog.id)
+    redirect_to dogs_path(@dog)
+  end
+
   def index
     @dogs = Dog.all
   end
