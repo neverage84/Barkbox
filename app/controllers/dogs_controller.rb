@@ -1,16 +1,8 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+
   # GET /dogs
   # GET /dogs.json
-
-  def like
-    @dog = Dog.all.find(params[:id])
-    Like.create(user_id: current_user:id, dog_id: @dog.id)
-    redirect_to dogs_path(@dog)
-  end
-
   def index
     @dogs = Dog.all
   end
@@ -22,8 +14,7 @@ class DogsController < ApplicationController
 
   # GET /dogs/new
   def new
-    #@dog = Dog.new
-    @dog = current_user.dogs.build
+    @dog = Dog.new
   end
 
   # GET /dogs/1/edit
@@ -33,8 +24,8 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    #@dog = Dog.new(dog_params)
-    @dog = current_user.dogs.build(dog_params)
+    @dog = Dog.new(dog_params)
+
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
@@ -74,11 +65,6 @@ class DogsController < ApplicationController
     end
   end
 
-    def correct_user
-      @dog = current_user.dogs.find_by(id: params[:id])
-      redirect_to dogs_path, notice: "Not Authorized To Edit This Dog" if @dog.nil?
-    end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dog
@@ -87,6 +73,6 @@ class DogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dog_params
-      params.require(:dog).permit(:name, :description, :images, :user_id)
+      params.require(:dog).permit(:name, :description, :images)
     end
 end
