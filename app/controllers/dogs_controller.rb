@@ -1,5 +1,6 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only:[:edit, :update, :destroy]
 
   # GET /dogs
   # GET /dogs.json
@@ -14,7 +15,8 @@ class DogsController < ApplicationController
 
   # GET /dogs/new
   def new
-    @dog = Dog.new
+    #@dog = Dog.new
+    @dog = current_user.dogs.build
   end
 
   # GET /dogs/1/edit
@@ -24,7 +26,8 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.new(dog_params)
+    #@dog = Dog.new(dog_params)
+    @dog = current_user.dogs.build(dog_params)
 
     respond_to do |format|
       if @dog.save
@@ -63,6 +66,11 @@ class DogsController < ApplicationController
       format.html { redirect_to dogs_url, notice: 'Dog was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def correct_user
+    @dog = current_user.dogs.find_by(id: params[:id])
+    redirect_to dogs_path, notice:"Only Owner Can Edit This Dog" if @dog.nil?
   end
 
   private
