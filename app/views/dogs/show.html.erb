@@ -1,16 +1,26 @@
 
 <section>
-  
-  <h2><%= @dog.name %></h2>
+  <div class="card" >
+    <div class="card-header">
+      <h2><%= @dog.name %></h2>
+    </div>
 
   <% @dog.images.each do |image| %>
+
+  <div class="card-body">
     <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+
+  </div>
   <% end %>
 
-  <p><%= @dog.description %></p>
+  <p class="card-text"><%= @dog.description %></p>
 
-  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
+  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path , class:"btn btn-warning"%>
   <br>
-  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+
+  </div>
 </section>
+
+
 
