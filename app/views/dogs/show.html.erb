@@ -1,4 +1,6 @@
+
 <section>
+  
   <h2><%= @dog.name %></h2>
 
   <% @dog.images.each do |image| %>
@@ -11,3 +13,4 @@
   <br>
   <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
 </section>
+

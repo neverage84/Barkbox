@@ -1,6 +1,14 @@
-<a href="<%= url_for(dog) %>">
-  <article>
-    <h2 class="dog-name"><%= dog.name %></h2>
-    <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
-  </article>
-</a>
+
+
+<div class="card" >
+  <div class="card-header">
+  </div>
+<div class="card-body">
+  <a href="<%= url_for(dog) %>">
+  <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
+  
+     <h2 class="dog-name"><%= dog.name %></h2>
+     </a>
+  </div>
+<div class="card-footer"></div>
+</div>

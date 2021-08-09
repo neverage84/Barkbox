@@ -3,7 +3,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.4'
 
+gem 'will_paginate', '~> 3.1.1'
+gem 'will_paginate-bootstrap' 
+#this is needed to add bootsrap style to pagination
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+
+
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
