@@ -1,6 +1,14 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only:[:edit, :update, :destroy]
+  before_action :authenticate_user!, only: :toggle_favorite
+
+
+#  def toggle_favorite
+ #   @dog = Dog.find_by(id: params[:id])
+ #   current_user.favorited?(@dog)  ? current_user.unfavorite(@dog) : current_user.favorite(@dog)
+ # end
+#end
 
   # GET /dogs
   # GET /dogs.json
@@ -19,6 +27,8 @@ class DogsController < ApplicationController
     @dog = current_user.dogs.build
   end
 
+
+
   # GET /dogs/1/edit
   def edit
   end
@@ -28,7 +38,6 @@ class DogsController < ApplicationController
   def create
     #@dog = Dog.new(dog_params)
     @dog = current_user.dogs.build(dog_params)
-
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
@@ -41,6 +50,9 @@ class DogsController < ApplicationController
       end
     end
   end
+
+
+
 
   # PATCH/PUT /dogs/1
   # PATCH/PUT /dogs/1.json
@@ -73,6 +85,9 @@ class DogsController < ApplicationController
     redirect_to dogs_path, notice:"Only Owner Can Edit This Dog" if @dog.nil?
   end
 
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dog
@@ -81,6 +96,8 @@ class DogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dog_params
-      params.require(:dog).permit(:name, :description, :images)
+      params.require(:dog).permit(:name, :description, images: [])
     end
 end
+
+

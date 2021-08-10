@@ -8,15 +8,21 @@
  <div class="form-group">
   <%= f.input :description, as: :text, class:"form-control" %>
  </div>
- <div class="form-group">
-  <%= f.input :image, as: :file %>
+
+ 
+
+ <div class="form-group" >
+  <%= f.input :images, as: :file , multiple:true %>
 </div>
+
+<% (0...@dog.images.count).each do |image|%>
+  <%= image_tag(@dog.images[image]) %>
+ <% end %>
+ 
 
   <%= f.number_field :user_id, id: :dog_user_id, value:current_user.id, type: :hidden %>
 
-  <% if @dog.images.any? %>
-    <%= image_tag @dog.images.first %>
-  <% end %>
+
 
   <%= f.button :submit %>
 <% end %>

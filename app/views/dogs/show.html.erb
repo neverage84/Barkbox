@@ -9,7 +9,7 @@
 
   <div class="card-body">
     <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-
+ <%= link_to "like", toggle_favorite_dog_path(dog), remote: true, method: :post %>
   </div>
   <% end %>
 
