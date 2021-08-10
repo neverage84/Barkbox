@@ -10,10 +10,14 @@ class DogsController < ApplicationController
  # end
 #end
 
+
+
   # GET /dogs
   # GET /dogs.json
   def index
     @dogs = Dog.paginate page: params[:page], per_page: 5
+
+    #@dogs = Dog.order('DATE(updated_at), favorites DESC')  --Most recent then by most liked
   end
 
   # GET /dogs/1
